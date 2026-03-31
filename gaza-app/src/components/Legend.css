@@ -1,0 +1,60 @@
+/* ── Legend – positioned below layer toggle ── */
+.legend {
+  position: absolute;
+  top: 58px; /* below the layer toggle button */
+  right: 12px;
+  z-index: 790;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  min-width: 68px;
+}
+
+/* RTL: legend goes to the left side (opposite of tools) */
+[dir="rtl"] .legend {
+  right: auto;
+  left: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1px 10px 1px 14px;
+  min-height: 22px;
+  transition: transform 0.12s ease;
+}
+
+.legend-item:hover {
+  transform: scaleX(1.06);
+  transform-origin: right;
+}
+
+[dir="rtl"] .legend-item:hover {
+  transform-origin: left;
+}
+
+.legend-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 600px) {
+  .legend {
+    min-width: 54px;
+    top: 52px;
+    right: 8px;
+  }
+  [dir="rtl"] .legend { right: auto; left: 8px; }
+  .legend-item { min-height: 18px; padding: 0 8px 0 10px; }
+  .legend-label { font-size: 9px; }
+}

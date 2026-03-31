@@ -1,0 +1,199 @@
+/* ══════════════════════════════════════
+   Loading Screen – topographic theme
+   ══════════════════════════════════════ */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  transform: scale(1.05);
+  pointer-events: none;
+}
+
+/* ── Animated topo background ── */
+.loading-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.12;
+}
+
+.topo-line {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid #22c55e;
+  animation: topoExpand 8s ease-in-out infinite;
+}
+
+.topo-1 {
+  width: 200px; height: 200px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 0s;
+}
+
+.topo-2 {
+  width: 350px; height: 300px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 0.5s;
+  border-color: #84cc16;
+}
+
+.topo-3 {
+  width: 500px; height: 420px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 1s;
+  border-color: #eab308;
+}
+
+.topo-4 {
+  width: 700px; height: 560px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 1.5s;
+  border-color: #f97316;
+}
+
+.topo-5 {
+  width: 900px; height: 700px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: 2s;
+  border-color: #ef4444;
+}
+
+@keyframes topoExpand {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.3; }
+  50%      { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+}
+
+/* ── Content ── */
+.loading-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Icon ── */
+.loading-icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.loading-icon svg {
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+.loading-ping {
+  position: absolute;
+  width: 12px; height: 12px;
+  top: 8px; right: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: ping 1.5s ease-in-out infinite;
+}
+
+@keyframes ping {
+  0%   { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+  70%  { transform: scale(1); opacity: 1; box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* ── Title ── */
+.loading-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.loading-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: -8px;
+}
+
+/* ── Progress bar ── */
+.loading-bar-container {
+  width: 280px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.loading-bar {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #22c55e, #84cc16, #eab308, #f97316, #ef4444);
+  background-size: 300% 100%;
+  animation: gradientShift 3s ease infinite;
+  transition: width 0.1s ease;
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ── Info line ── */
+.loading-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.loading-percent {
+  color: #22c55e;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 36px;
+}
+
+.loading-status {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* ── Footer ── */
+.loading-footer {
+  position: absolute;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: #475569;
+}
