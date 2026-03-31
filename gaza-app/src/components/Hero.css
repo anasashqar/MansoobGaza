@@ -1,0 +1,205 @@
+/* ══════════════════════════════════════════
+   Hero.css – Modern Landing Page Section
+   ══════════════════════════════════════════ */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top right, #e8f5e9 0%, #fefefe 40%, #f0fdf4 100%);
+  overflow: hidden;
+  padding: 40px 24px;
+}
+
+/* Add a beautiful animated mesh background */
+.hero-bg-shape {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(22, 163, 74, 0.15) 0%, rgba(22, 163, 74, 0) 70%);
+  border-radius: 50%;
+  top: -20%;
+  right: -10%;
+  z-index: 0;
+  animation: floatShape 14s ease-in-out infinite alternate;
+}
+
+.hero-bg-shape-2 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0) 70%);
+  border-radius: 50%;
+  bottom: -15%;
+  left: -10%;
+  z-index: 0;
+  animation: floatShape 18s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes floatShape {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-40px, 40px) scale(1.1); }
+}
+
+.hero-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #16a34a;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.05);
+  animation: fadeUp 0.8s ease-out;
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 800;
+  color: #1a1a2e;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+  animation: fadeUp 1s ease-out;
+}
+
+
+
+.text-gradient {
+  background: linear-gradient(135deg, #16a34a, #059669);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: #4b5563;
+  line-height: 1.7;
+  max-width: 650px;
+  margin-bottom: 40px;
+  animation: fadeUp 1.2s ease-out;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  animation: fadeUp 1.4s ease-out;
+}
+
+.hero-btn-primary {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(22, 163, 74, 0.4);
+}
+
+.hero-btn-primary svg {
+  transition: transform 0.3s ease;
+}
+
+.hero-btn-primary:hover svg {
+  transform: translateY(3px);
+}
+
+.hero-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+  width: 100%;
+  animation: fadeUp 1.6s ease-out;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+  text-align: right;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+}
+
+[dir="ltr"] .feature-card {
+  text-align: left;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  background: #f0fdf4;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16a34a;
+  margin-bottom: 16px;
+}
+
+.feature-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 40px; }
+  .hero-subtitle { font-size: 16px; }
+  .hero-features { grid-template-columns: 1fr; gap: 16px; }
+  .hero-btn-primary { width: 100%; justify-content: center; }
+  .feature-card { text-align: center; }
+  .feature-icon { margin: 0 auto 16px; }
+}

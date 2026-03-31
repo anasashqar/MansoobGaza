@@ -7,6 +7,7 @@ import {
 } from '../utils/geoUtils';
 import { useLang } from '../context/LangContext';
 import Legend from './Legend';
+import Hero from './Hero';
 import './ElevationMap.css';
 
 function createGazaMask(L_ref) {
@@ -79,7 +80,7 @@ export default function ElevationMap() {
     fetchAndDisplayElevation(e.latlng.lat, e.latlng.lng, false);
   }, [fetchAndDisplayElevation]);
 
-  const handleSearchSubmit = useCallback((e) => {
+  const handleSearchSubmit = useCallback(async (e) => {
     if (e) e.preventDefault();
     const clean = searchInput.trim();
     if (!clean) return;
@@ -87,14 +88,34 @@ export default function ElevationMap() {
     // Parse coordinates like "31.42, 34.38" or "31.42 34.38"
     const regex = /[-+]?([0-9]*\.[0-9]+|[0-9]+)[,\s]+[-+]?([0-9]*\.[0-9]+|[0-9]+)/;
     const match = clean.match(regex);
-    if (!match) {
-      setError(t.invalidCoords || 'Invalid format');
-      setTimeout(() => setError(null), 3000);
+    if (match) {
+      const lat = parseFloat(match[1]);
+      const lng = parseFloat(match[2]);
+      fetchAndDisplayElevation(lat, lng, true);
       return;
     }
-    const lat = parseFloat(match[1]);
-    const lng = parseFloat(match[2]);
-    fetchAndDisplayElevation(lat, lng, true);
+
+    // If not coordinates, try place name search via OpenStreetMap Nominatim
+    setLoading(true);
+    try {
+      // Append Gaza to restrict/bias search towards the region
+      const query = encodeURIComponent(clean + ' Gaza');
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}&limit=1`);
+      const data = await res.json();
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lng = parseFloat(data[0].lon);
+        fetchAndDisplayElevation(lat, lng, true);
+      } else {
+        setError(t.invalidCoords || 'Not found');
+        setTimeout(() => setError(null), 3000);
+      }
+    } catch {
+      setError(t.fetchError);
+      setTimeout(() => setError(null), 3000);
+    } finally {
+      setLoading(false);
+    }
   }, [searchInput, fetchAndDisplayElevation, t]);
 
   useEffect(() => {
@@ -116,8 +137,21 @@ export default function ElevationMap() {
     L.control.zoom({ position: 'topleft' }).addTo(map);
     L.control.scale({ position: 'bottomleft', imperial: false, metric: true }).addTo(map);
     mapInstance.current = map;
+
+    // Check url for shared coordinates
+    const params = new URLSearchParams(window.location.search);
+    const plat = params.get('lat');
+    const plng = params.get('lng');
+    if (plat && plng) {
+      const lat = parseFloat(plat);
+      const lng = parseFloat(plng);
+      if (!isNaN(lat) && !isNaN(lng)) {
+        setTimeout(() => fetchAndDisplayElevation(lat, lng, true), 500);
+      }
+    }
+
     return () => { map.remove(); mapInstance.current = null; };
-  }, []);
+  }, [fetchAndDisplayElevation]);
 
   useEffect(() => {
     const map = mapInstance.current;
@@ -161,8 +195,11 @@ export default function ElevationMap() {
         </button>
       </header>
 
+      {/* ── HERO SECTION ── */}
+      <Hero />
+
       {/* ── MAP SECTION ── */}
-      <section className="map-section" aria-label="Elevation Map">
+      <section className="map-section" aria-label="Elevation Map" id="map-section-wrapper">
         <div className="map-card">
           <div className="map-inner">
             <div ref={mapRef} className="map-view" id="map" />
